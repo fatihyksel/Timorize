@@ -1,6 +1,6 @@
 # Timorize
 
-**Proje Tanımı:**Hayatınızı Planlayın, Zamanınızı Yönetin
+**Proje Tanımı:** Hayatınızı Planlayın, Zamanınızı Yönetin
 
 Timorize, günlük planlamalarınızı yaparak tüm hayatınızı düzenleyebileceğiniz, zaman yönetimini verimli hale getiren bir platformdur. Pomodoro Tekniği, Eisenhower Matrisi, Kanban Tekniği, Pareto Prensibi, 168 Saat Tekniği, Kafein Şekerlemesi Yöntemi, “O Kurbağayı Ye” Tekniği, GTD (Getting Things Done) ve Parkinson Tekniği gibi birçok zaman yönetimi metodunu destekleyen Timorize, kullanıcıların favori tekniklerini belirleyip kendi zaman planlarını oluşturmasına olanak tanır.
 
