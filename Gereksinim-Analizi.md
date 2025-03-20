@@ -1,8 +1,8 @@
 
 
 # Gereksinimler
-1. Özel zaman teknikleri secmek.
-2. kayıtlı zamanları listeleme.
+1. Zaman teknikleri seçmek.
+2. Kayıtlı zamanları listeleme.
 3. Çıkış yapmak.
 4. Kayıtlı zamanları silmek.
 5. Favori Zaman
