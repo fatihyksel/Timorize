@@ -1,6 +1,6 @@
 Gereksinimler Açıklamaları
 
-1. Zaman teknikleri secmek:
+1. Zaman teknikleri seçmek:
 
 Kullanıcılar, platformda sunulan farklı zaman yönetimi tekniklerinden istediklerini seçerek kişiselleştirilmiş bir deneyim oluşturabilecekler.
 
