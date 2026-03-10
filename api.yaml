@@ -1,0 +1,396 @@
+openapi: 3.0.3
+info:
+  title: Timorize - Zaman Yönetim API'si
+  version: 1.0.0
+  description: >
+    Timorize, kullanıcıların Pomodoro, Eisenhower Matrisi, Kanban, GTD gibi 
+    birçok zaman yönetimi tekniğini kullanarak günlük planlamalarını yaptığı 
+    ve zamanlarını verimli yönettiği bir platformdur. Bu API, kullanıcı 
+    işlemlerini, zamanlayıcı kayıtlarını ve günlük planları yönetmek için 
+    tasarlanmıştır.
+  contact:
+    name: REMEDY Grubu
+    url: https://abc.com
+
+servers:
+  - url: https://api.abc.com
+    description: Üretim sunucusu (Production)
+  - url: https://localhost:3000
+    description: Yerel geliştirme sunucusu (Development)
+
+tags:
+  - name: Kimlik Doğrulama
+    description: Üye olma, giriş yapma, çıkış yapma ve hesap silme işlemleri
+  - name: Zaman Teknikleri
+    description: Zaman yönetimi tekniklerini seçme ve favorilere ekleme
+  - name: Günlük Planlar
+    description: Günlük plan oluşturma ve güncelleme işlemleri
+  - name: Zamanlayıcı
+    description: Zamanlayıcı oluşturma, kayıtları listeleme ve silme
+
+security:
+  - BearerAuth: []
+
+paths:
+  /api/auth/register:
+    post:
+      tags:
+        - Kimlik Doğrulama
+      summary: Üye Olma
+      operationId: registerUser
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        "201":
+          description: Kullanıcı başarıyla oluşturuldu
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Geçersiz istek verisi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/auth/login:
+    post:
+      tags:
+        - Kimlik Doğrulama
+      summary: Giriş Yapma
+      operationId: loginUser
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginInput'
+      responses:
+        "200":
+          description: Giriş başarılı, JWT token döndürüldü
+        "401":
+          description: Hatalı e-posta veya şifre
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/auth/logout:
+    post:
+      tags:
+        - Kimlik Doğrulama
+      summary: Çıkış Yapma
+      operationId: logoutUser
+      responses:
+        "200":
+          description: Başarıyla çıkış yapıldı
+        "401":
+          description: Kimlik doğrulama başarısız
+
+  /api/users/{userid}:
+    parameters:
+      - name: userid
+        in: path
+        required: true
+        description: Kullanıcının benzersiz kimlik numarası
+        schema:
+          type: string
+        example: "usr789"
+    delete:
+      tags:
+        - Kimlik Doğrulama
+      summary: Üyelik Silme
+      operationId: deleteAccount
+      responses:
+        "204":
+          description: Hesap başarıyla silindi
+        "401":
+          description: Kimlik doğrulama başarısız
+        "403":
+          description: Bu işlem için yetkiniz bulunmuyor
+
+  /api/techniques/select:
+    post:
+      tags:
+        - Zaman Teknikleri
+      summary: Zaman Tekniği Seçme
+      operationId: selectTechnique
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TechniqueInput'
+      responses:
+        "200":
+          description: Teknik başarıyla seçildi ve aktif edildi
+        "401":
+          description: Kimlik doğrulama başarısız
+
+  /api/techniques/favorite:
+    post:
+      tags:
+        - Zaman Teknikleri
+      summary: Favori Zaman Tekniği Ekleme
+      operationId: addFavoriteTechnique
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TechniqueInput'
+      responses:
+        "201":
+          description: Teknik başarıyla favorilere eklendi
+        "401":
+          description: Kimlik doğrulama başarısız
+
+  /api/plans:
+    post:
+      tags:
+        - Günlük Planlar
+      summary: Günlük Plan Oluşturma
+      operationId: createDailyPlan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanInput'
+      responses:
+        "201":
+          description: Günlük plan başarıyla oluşturuldu
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+        "400":
+          description: Geçersiz istek verisi
+
+  /api/plans/{planid}:
+    parameters:
+      - name: planid
+        in: path
+        required: true
+        description: Günlük planın benzersiz kimlik numarası
+        schema:
+          type: string
+        example: "pln123"
+    put:
+      tags:
+        - Günlük Planlar
+      summary: Günlük Planı Güncelleme
+      operationId: updateDailyPlan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanInput'
+      responses:
+        "200":
+          description: Günlük plan başarıyla güncellendi
+        "404":
+          description: Plan bulunamadı
+
+  /api/timers:
+    post:
+      tags:
+        - Zamanlayıcı
+      summary: Zamanlayıcı Oluşturma
+      operationId: createTimer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimerInput'
+      responses:
+        "201":
+          description: Zamanlayıcı başarıyla başlatıldı
+        "400":
+          description: Geçersiz istek verisi
+
+  /api/timers/logs:
+    get:
+      tags:
+        - Zamanlayıcı
+      summary: Kayıtlı Zamanları Listeleme
+      operationId: listTimeLogs
+      responses:
+        "200":
+          description: Zaman kayıtları başarıyla listelendi
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimeLog'
+        "401":
+          description: Kimlik doğrulama başarısız
+
+  /api/timers/logs/{logid}:
+    parameters:
+      - name: logid
+        in: path
+        required: true
+        description: Zaman kaydının benzersiz kimlik numarası
+        schema:
+          type: string
+        example: "log456"
+    delete:
+      tags:
+        - Zamanlayıcı
+      summary: Kayıtlı Zaman Kaydını Silme
+      operationId: deleteTimeLog
+      responses:
+        "204":
+          description: Zaman kaydı başarıyla silindi
+        "404":
+          description: Zaman kaydı bulunamadı
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'JWT tabanlı kimlik doğrulama.'
+
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "usr789"
+        name:
+          type: string
+          example: "Ahmet Yılmaz"
+        email:
+          type: string
+          example: "ahmet@example.com"
+
+    UserInput:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Ahmet Yılmaz"
+        email:
+          type: string
+          example: "ahmet@example.com"
+        password:
+          type: string
+          example: "StrongP@ssw0rd!"
+      required:
+        - name
+        - email
+        - password
+
+    LoginInput:
+      type: object
+      properties:
+        email:
+          type: string
+          example: "ahmet@example.com"
+        password:
+          type: string
+          example: "StrongP@ssw0rd!"
+      required:
+        - email
+        - password
+
+    TechniqueInput:
+      type: object
+      properties:
+        techniqueName:
+          type: string
+          example: "Pomodoro Tekniği"
+          enum: 
+            - "Pomodoro Tekniği"
+            - "Eisenhower Matrisi"
+            - "Kanban Tekniği"
+            - "GTD"
+      required:
+        - techniqueName
+
+    Plan:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "pln123"
+        title:
+          type: string
+          example: "Vize Çalışma Planı"
+        date:
+          type: string
+          format: date
+          example: "2026-03-10"
+
+    PlanInput:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Vize Çalışma Planı"
+        date:
+          type: string
+          format: date
+          example: "2026-03-10"
+        tasks:
+          type: array
+          items:
+            type: string
+          example: ["Yazılım Müh. Notlarını Oku", "API Tasarımını Bitir"]
+      required:
+        - title
+        - date
+
+    TimerInput:
+      type: object
+      properties:
+        taskName:
+          type: string
+          example: "Backend Geliştirme"
+        durationInMinutes:
+          type: integer
+          example: 25
+      required:
+        - taskName
+        - durationInMinutes
+
+    TimeLog:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "log456"
+        taskName:
+          type: string
+          example: "Backend Geliştirme"
+        durationSpent:
+          type: integer
+          description: "Dakika cinsinden harcanan zaman"
+          example: 25
+        completedAt:
+          type: string
+          format: date-time
+          example: "2026-03-10T14:30:00Z"
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "İşlem başarısız oldu veya yetkisiz erişim."
+      required:
+        - message
