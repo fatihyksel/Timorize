@@ -1,0 +1,383 @@
+{
+  "info": {
+    "_postman_id": "1b89d044-65b8-4d46-aca8-2164ba14bf57",
+    "name": "yazmuh",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "40387868"
+  },
+  "item": [
+    {
+      "name": "Üye Olma (Register)",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Giriş Yapma (Login)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"fatih15@test.com\",\r\n  \"password\": \"sifre123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://timorize.vercel.app/api/auth/login",
+          "protocol": "https",
+          "host": [
+            "timorize",
+            "vercel",
+            "app"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Çıkış Yapma (Logout)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQyYmI0ZGQwMmIzYWY2YjhkMGEzNDUiLCJpYXQiOjE3NzU0MTgyNjIsImV4cCI6MTc3NjAyMzA2Mn0.VpHHMc4rjkN1wySVPiUisVgdXpPUdKqgY_azxoxMv1w",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "https://timorize.vercel.app/api/auth/logout",
+          "protocol": "https",
+          "host": [
+            "timorize",
+            "vercel",
+            "app"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "logout"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Üyelik Silme (Delete User)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQyYmI0ZGQwMmIzYWY2YjhkMGEzNDUiLCJpYXQiOjE3NzU0MTg3ODQsImV4cCI6MTc3NjAyMzU4NH0.rQzNmM-1wzVTQp1rJk-RpCdxZT1HdGxDo266U1hBXyg",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://timorize.vercel.app/api/users/69d2bb4dd02b3af6b8d0a345",
+          "protocol": "https",
+          "host": [
+            "timorize",
+            "vercel",
+            "app"
+          ],
+          "path": [
+            "api",
+            "users",
+            "69d2bb4dd02b3af6b8d0a345"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Günlük Plan Oluşturma",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQyYmViNTAzOTk0Mzk4NGFjZWYyY2EiLCJpYXQiOjE3NzU0MTkwNjQsImV4cCI6MTc3NjAyMzg2NH0.u9fFsMT826BmafxZTmbcv69fN-6wg_wBLALOVu80NoM",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Backend Sunumu\",\r\n  \"description\": \"Postman test videoları çekilecek.\",\r\n  \"date\": \"2026-04-05\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://timorize.vercel.app/api/plans",
+          "protocol": "https",
+          "host": [
+            "timorize",
+            "vercel",
+            "app"
+          ],
+          "path": [
+            "api",
+            "plans"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Günlük Planı Güncelleme",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQyYmViNTAzOTk0Mzk4NGFjZWYyY2EiLCJpYXQiOjE3NzU0MTkwNjQsImV4cCI6MTc3NjAyMzg2NH0.u9fFsMT826BmafxZTmbcv69fN-6wg_wBLALOVu80NoM",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Backend Sunumu (GÜNCELLENDİ)\",\r\n  \"date\": \"2026-05-06\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://timorize.vercel.app/api/plans/69d2bede039943984acef2cd",
+          "protocol": "https",
+          "host": [
+            "timorize",
+            "vercel",
+            "app"
+          ],
+          "path": [
+            "api",
+            "plans",
+            "69d2bede039943984acef2cd"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Zamanlayıcı Kaydı Oluşturma",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQyYmViNTAzOTk0Mzk4NGFjZWYyY2EiLCJpYXQiOjE3NzU0MjAxMDAsImV4cCI6MTc3NjAyNDkwMH0.IpxGPiO2KPpCOGjLRlxPC2d_c45KUgPQub4MRC8yebU",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"taskName\": \"Final Hazirlik\",\r\n  \"durationInMinutes\": 25\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://timorize.vercel.app/api/timers/",
+          "protocol": "https",
+          "host": [
+            "timorize",
+            "vercel",
+            "app"
+          ],
+          "path": [
+            "api",
+            "timers",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Kayıtlı Zamanları Listeleme",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQyYmViNTAzOTk0Mzk4NGFjZWYyY2EiLCJpYXQiOjE3NzU0MjAxMDAsImV4cCI6MTc3NjAyNDkwMH0.IpxGPiO2KPpCOGjLRlxPC2d_c45KUgPQub4MRC8yebU",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://timorize.vercel.app/api/timers/logs",
+          "protocol": "https",
+          "host": [
+            "timorize",
+            "vercel",
+            "app"
+          ],
+          "path": [
+            "api",
+            "timers",
+            "logs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Zaman Kaydı Silme",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQyYmViNTAzOTk0Mzk4NGFjZWYyY2EiLCJpYXQiOjE3NzU0MjAxMDAsImV4cCI6MTc3NjAyNDkwMH0.IpxGPiO2KPpCOGjLRlxPC2d_c45KUgPQub4MRC8yebU",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://timorize.vercel.app//api/timers/logs/69d2c338039943984acef2d5",
+          "protocol": "https",
+          "host": [
+            "timorize",
+            "vercel",
+            "app"
+          ],
+          "path": [
+            "",
+            "api",
+            "timers",
+            "logs",
+            "69d2c338039943984acef2d5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Zaman Tekniği Seçme",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQyYmViNTAzOTk0Mzk4NGFjZWYyY2EiLCJpYXQiOjE3NzU0MjAxMDAsImV4cCI6MTc3NjAyNDkwMH0.IpxGPiO2KPpCOGjLRlxPC2d_c45KUgPQub4MRC8yebU",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"techniqueName\": \"Pomodoro Tekniği\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://timorize.vercel.app/api/techniques/select",
+          "protocol": "https",
+          "host": [
+            "timorize",
+            "vercel",
+            "app"
+          ],
+          "path": [
+            "api",
+            "techniques",
+            "select"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Favori Zaman Tekniği Ekleme",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQyYmViNTAzOTk0Mzk4NGFjZWYyY2EiLCJpYXQiOjE3NzU0MjAxMDAsImV4cCI6MTc3NjAyNDkwMH0.IpxGPiO2KPpCOGjLRlxPC2d_c45KUgPQub4MRC8yebU",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"techniqueName\": \"Pomodoro Tekniği\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://timorize.vercel.app/api/techniques/favorite",
+          "protocol": "https",
+          "host": [
+            "timorize",
+            "vercel",
+            "app"
+          ],
+          "path": [
+            "api",
+            "techniques",
+            "favorite"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
