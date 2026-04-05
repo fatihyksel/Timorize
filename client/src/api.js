@@ -1,5 +1,8 @@
 const TOKEN_KEY = 'timorize_token';
 
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 export function getToken() {
   return localStorage.getItem(TOKEN_KEY);
 }
@@ -12,8 +15,9 @@ export function clearToken() {
   localStorage.removeItem(TOKEN_KEY);
 }
 
+
 export async function apiLogin(email, password) {
-  const res = await fetch('/api/auth/login', {
+  const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
@@ -24,7 +28,7 @@ export async function apiLogin(email, password) {
 }
 
 export async function apiRegister(name, email, password) {
-  const res = await fetch('/api/auth/register', {
+  const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, email, password }),
@@ -42,14 +46,14 @@ function authHeaders() {
 }
 
 export async function apiListTimeLogs() {
-  const res = await fetch('/api/timers/logs', { headers: authHeaders() });
+  const res = await fetch(`${API_BASE_URL}/api/timers/logs`, { headers: authHeaders() });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.message || 'Kayıtlar alınamadı');
   return data;
 }
 
 export async function apiCreateTimeLog(taskName, durationInMinutes) {
-  const res = await fetch('/api/timers', {
+  const res = await fetch(`${API_BASE_URL}/api/timers`, {
     method: 'POST',
     headers: authHeaders(),
     body: JSON.stringify({ taskName, durationInMinutes }),
@@ -60,7 +64,7 @@ export async function apiCreateTimeLog(taskName, durationInMinutes) {
 }
 
 export async function apiDeleteTimeLog(logId) {
-  const res = await fetch(`/api/timers/logs/${encodeURIComponent(logId)}`, {
+  const res = await fetch(`${API_BASE_URL}/api/timers/logs/${encodeURIComponent(logId)}`, {
     method: 'DELETE',
     headers: authHeaders(),
   });
@@ -69,8 +73,9 @@ export async function apiDeleteTimeLog(logId) {
     throw new Error(data.message || 'Silinemedi');
   }
 }
+
 export async function apiDeleteUser(userId) {
-  const res = await fetch(`/api/users/${encodeURIComponent(userId)}`, {
+  const res = await fetch(`${API_BASE_URL}/api/users/${encodeURIComponent(userId)}`, {
     method: 'DELETE',
     headers: authHeaders(),
   });
@@ -79,6 +84,5 @@ export async function apiDeleteUser(userId) {
     const data = await res.json().catch(() => ({}));
     throw new Error(data.message || 'Hesap silinemedi');
   }
-  // 204 No Content döndüğü için json() parse etmeye gerek yok
   return true;
 }
