@@ -1,0 +1,97 @@
+.planner {
+    background: rgba(24, 24, 27, 0.4); /* Timorize ana arka planıyla uyumlu panel */
+    color: #ececf1; /* Açık gri/beyaz metin */
+    padding: 1.5rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05); /* İnce şeffaf çerçeve */
+    font-family: 'SF Mono', ui-monospace, 'Cascadia Code', monospace;
+    min-height: 500px;
+  }
+  
+  .planner__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 1rem;
+    margin-bottom: 0;
+  }
+  
+  .planner__title {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    margin: 0;
+    color: #fafafa;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .planner__info {
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-align: center;
+    color: #a1a1aa;
+    line-height: 1.4;
+  }
+  
+  .planner__logo-icon {
+    font-size: 1.5rem;
+  }
+  
+  .planner__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 400px;
+  }
+  
+  .planner__day-col {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: background 0.2s;
+  }
+  
+  .planner__day-col:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+  
+  .planner__day-header {
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.2);
+  }
+  
+  .planner__day-name {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #e4e4e7;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .planner__day-date {
+    font-size: 0.65rem;
+    color: #a1a1aa;
+  }
+  
+  .planner__input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 10px;
+    resize: none;
+    font-size: 0.85rem;
+    color: #d4d4d8;
+    outline: none;
+    line-height: 1.5;
+    font-family: inherit;
+  }
+  
+  .planner__input::placeholder {
+    color: rgba(255, 255, 255, 0.15);
+  }

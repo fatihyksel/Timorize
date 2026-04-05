@@ -1,8 +1,16 @@
+
 require('dotenv').config();
+
 
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
+const { connectDB } = require('./config/db');
+
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const planRoutes = require('./routes/planRoutes');
+const timerRoutes = require('./routes/timerRoutes');
+const techniqueRoutes = require('./routes/techniqueRoutes');
 
 const app = express();
 
@@ -11,6 +19,11 @@ const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
   console.error('Hata: MONGODB_URI ortam değişkeni tanımlı değil.');
+  process.exit(1);
+}
+
+if (!process.env.JWT_SECRET) {
+  console.error('Hata: JWT_SECRET ortam değişkeni tanımlı değil.');
   process.exit(1);
 }
 
@@ -29,9 +42,15 @@ app.get('/health', (_req, res) => {
   res.status(200).json({ status: 'ok', service: 'timorize-api' });
 });
 
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/plans', planRoutes);
+app.use('/api/timers', timerRoutes);
+app.use('/api/techniques', techniqueRoutes);
+
 async function start() {
   try {
-    await mongoose.connect(MONGODB_URI);
+    await connectDB(MONGODB_URI);
     console.log('MongoDB bağlantısı kuruldu.');
 
     app.listen(PORT, () => {

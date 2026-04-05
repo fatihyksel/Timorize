@@ -31,12 +31,15 @@ const planSchema = new mongoose.Schema(
     toJSON: {
       virtuals: true,
       transform(_doc, ret) {
-        ret._id = ret._id.toString();
-        if (ret.date) {
-          ret.date = ret.date.toISOString().slice(0, 10);
-        }
-        delete ret.__v;
-        return ret;
+        const out = {
+          _id: ret._id.toString(),
+          title: ret.title,
+          date: ret.date
+            ? ret.date.toISOString().slice(0, 10)
+            : ret.date,
+          tasks: ret.tasks ?? [],
+        };
+        return out;
       },
     },
     toObject: { virtuals: true },

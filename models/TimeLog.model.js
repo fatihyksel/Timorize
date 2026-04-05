@@ -32,12 +32,14 @@ const timeLogSchema = new mongoose.Schema(
     toJSON: {
       virtuals: true,
       transform(_doc, ret) {
-        ret._id = ret._id.toString();
-        if (ret.completedAt) {
-          ret.completedAt = ret.completedAt.toISOString();
-        }
-        delete ret.__v;
-        return ret;
+        return {
+          _id: ret._id.toString(),
+          taskName: ret.taskName,
+          durationSpent: ret.durationSpent,
+          completedAt: ret.completedAt
+            ? ret.completedAt.toISOString()
+            : ret.completedAt,
+        };
       },
     },
     toObject: { virtuals: true },

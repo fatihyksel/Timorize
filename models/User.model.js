@@ -27,31 +27,32 @@ const userSchema = new mongoose.Schema(
     },
     activeTechniqueName: {
       type: String,
-      enum: [...TECHNIQUE_NAMES, null],
-      default: null,
+      enum: TECHNIQUE_NAMES,
     },
-    favoriteTechniqueNames: [
-      {
-        type: String,
-        enum: TECHNIQUE_NAMES,
-      },
-    ],
+    favoriteTechniqueNames: {
+      type: [
+        {
+          type: String,
+          enum: TECHNIQUE_NAMES,
+        },
+      ],
+      default: [],
+    },
   },
   {
     timestamps: true,
     toJSON: {
       virtuals: true,
       transform(_doc, ret) {
-        ret._id = ret._id.toString();
-        delete ret.passwordHash;
-        delete ret.__v;
-        return ret;
+        return {
+          _id: ret._id.toString(),
+          name: ret.name,
+          email: ret.email,
+        };
       },
     },
     toObject: { virtuals: true },
   }
 );
-
-userSchema.index({ email: 1 });
 
 module.exports = mongoose.model('User', userSchema);
