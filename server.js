@@ -1,6 +1,4 @@
-
 require('dotenv').config();
-
 
 const express = require('express');
 const cors = require('cors');
@@ -17,14 +15,13 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI;
 
+// Ortam Değişkeni Kontrolleri
 if (!MONGODB_URI) {
   console.error('Hata: MONGODB_URI ortam değişkeni tanımlı değil.');
-  process.exit(1);
 }
 
 if (!process.env.JWT_SECRET) {
   console.error('Hata: JWT_SECRET ortam değişkeni tanımlı değil.');
-  process.exit(1);
 }
 
 const corsOptions = {
@@ -38,6 +35,10 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Veritabanı Bağlantısını Kur (Vercel her istekte bunu çağırabilir)
+connectDB(MONGODB_URI).catch(err => console.error("DB Bağlantı Hatası:", err));
+
+// Rotalar
 app.get('/health', (_req, res) => {
   res.status(200).json({ status: 'ok', service: 'timorize-api' });
 });
@@ -48,18 +49,13 @@ app.use('/api/plans', planRoutes);
 app.use('/api/timers', timerRoutes);
 app.use('/api/techniques', techniqueRoutes);
 
-async function start() {
-  try {
-    await connectDB(MONGODB_URI);
-    console.log('MongoDB bağlantısı kuruldu.');
-
+// --- VERCEL İÇİN KRİTİK DEĞİŞİKLİK ---
+// Sadece local'de çalışırken app.listen kullanıyoruz.
+if (process.env.NODE_ENV !== 'production') {
     app.listen(PORT, () => {
-      console.log(`Sunucu http://localhost:${PORT} adresinde dinliyor.`);
+        console.log(`Sunucu http://localhost:${PORT} adresinde dinliyor.`);
     });
-  } catch (err) {
-    console.error('Başlatma hatası:', err);
-    process.exit(1);
-  }
 }
 
-start();
+// Vercel'in rotaları görebilmesi için app nesnesini dışa aktarıyoruz
+module.exports = app;
