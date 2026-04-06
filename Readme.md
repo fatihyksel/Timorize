@@ -13,6 +13,7 @@ Timorize ile planlı bir hayatın kapılarını aralayın!
 **Referans Uygulama:** [https://clockify.me/](https://clockify.me/)
 
 **Proje Linkleri**
+
 *REST API Adresi*: https://timorize.vercel.app
 
 *Web Frontend Adresi*: https://timorize-uera.vercel.app/
