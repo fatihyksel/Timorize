@@ -14,6 +14,7 @@ Timorize ile planlı bir hayatın kapılarını aralayın!
 
 **Proje Linkleri**
 *REST API Adresi*: https://timorize.vercel.app
+
 *Web Frontend Adresi*: https://timorize-uera.vercel.app/
 
 
