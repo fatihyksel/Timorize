@@ -1,6 +1,6 @@
 # Fatih Yüksel'in Web Frontend Görevleri
 
-**Front-end Test Videosu:** Link buraya eklenecek
+**Front-end Test Videosu:** https://www.youtube.com/watch?v=Rye6e9R7oYk
 
 ---
 
