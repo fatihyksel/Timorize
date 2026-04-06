@@ -12,7 +12,10 @@ Timorize ile planlı bir hayatın kapılarını aralayın!
 
 **Referans Uygulama:** [https://clockify.me/](https://clockify.me/)
 
-**Uygulama Adresi:** [abc.com](abc.com) 
+**Proje Linkleri**
+*REST API Adresi*: https://timorize.vercel.app
+*Web Frontend Adresi*: https://timorize-uera.vercel.app/
+
 
 **Grup Adı:** REMEDY
 
@@ -21,6 +24,6 @@ Timorize ile planlı bir hayatın kapılarını aralayın!
 1. [Gereksinim Analizi](Gereksinim-Analizi.md)
 2. [Durum Diyagramı](Durum-Diyagramı.md)
 3. [Durum Senaryoları](Durum-Senaryoları.md)
-4. [Front-End](Front-End.md)
-5. [Back-End](Back-End.md)
+4. [ Web Frontend](WebFrontEnd.md)
+5. [Rest-API](Rest-API.md)
 6. [Video Sunum](Sunum.md)
