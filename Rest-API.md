@@ -1,7 +1,8 @@
-# 📘 API Dokümantasyonu
-  Video: https://www.youtube.com/watch?v=wMDjEP8gm1w
- https://timorize.vercel.app
-## 🔐 Authentication
+#  API Dokümantasyonu
+  **Video**: https://www.youtube.com/watch?v=wMDjEP8gm1w
+  
+  **link**:https://timorize.vercel.app
+##  Authentication
 
 ### 1. Üye Olma (Register)
 **Endpoint:** `POST /api/auth/register`
