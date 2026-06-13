@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Plan } = require('../models');
+const { getCachedJson, setCachedJson } = require('../services/cache');
 
 function parsePlanDate(dateStr) {
   if (!dateStr || typeof dateStr !== 'string') return null;
@@ -99,8 +100,19 @@ async function getDailyPlans(req, res) {
       filter.date = { $gte: start, $lt: end };
     }
 
+    const dateKey = date != null && String(date).trim() !== '' ? String(date).trim() : 'all';
+    const cacheKey = `plans:${req.user.id}:${dateKey}`;
+
+    const cached = await getCachedJson(cacheKey);
+    if (cached) {
+      return res.status(200).json(cached);
+    }
+
     const plans = await Plan.find(filter).sort({ date: 1 });
-    return res.status(200).json(plans.map((p) => p.toJSON()));
+    const result = plans.map((p) => p.toJSON());
+    await setCachedJson(cacheKey, result);
+
+    return res.status(200).json(result);
   } catch (_err) {
     return res.status(500).json({ message: 'İşlem başarısız oldu veya yetkisiz erişim.' });
   }

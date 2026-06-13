@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const { User, Plan, TimeLog } = require('../models');
+const { publishEvent } = require('../services/queuePublisher');
 
 const BCRYPT_ROUNDS = 12;
 
@@ -27,6 +28,12 @@ async function registerUser(req, res) {
       name: String(name).trim(),
       email: String(email).trim().toLowerCase(),
       passwordHash,
+    });
+
+     await publishEvent('user.registered', {
+      userId: user._id.toString(),
+      email: user.email,
+      name: user.name,
     });
 
     return res.status(201).json(user.toJSON());
@@ -95,6 +102,8 @@ async function deleteAccount(req, res) {
     if (!deleted) {
       return res.status(403).json({ message: 'Bu işlem için yetkiniz bulunmuyor' });
     }
+
+    await publishEvent('user.deleted', { userId: userid });
 
     return res.sendStatus(204);
   } catch {

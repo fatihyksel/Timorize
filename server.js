@@ -1,32 +1,24 @@
 require('dotenv').config();
-
 const express = require('express');
 const cors = require('cors');
 const { connectDB } = require('./config/db');
+const { initializeApp } = require('./config/redis.js');
 
+// Rota tanımlamaları
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const planRoutes = require('./routes/planRoutes');
 const timerRoutes = require('./routes/timerRoutes');
 const techniqueRoutes = require('./routes/techniqueRoutes');
+const { getCachedJson, setCachedJson } = require('./services/cache');
 
 const app = express();
-
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI;
 
-// Ortam Değişkeni Kontrolleri
-if (!MONGODB_URI) {
-  console.error('Hata: MONGODB_URI ortam değişkeni tanımlı değil.');
-}
-
-if (!process.env.JWT_SECRET) {
-  console.error('Hata: JWT_SECRET ortam değişkeni tanımlı değil.');
-}
-
+// Middleware ayarları
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN
-    ? process.env.CORS_ORIGIN.split(',').map((o) => o.trim())
+  origin: process.env.CORS_ORIGIN 
+    ? process.env.CORS_ORIGIN.split(',').map((o) => o.trim()) 
     : true,
   credentials: true,
 };
@@ -35,27 +27,51 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Veritabanı Bağlantısını Kur (Vercel her istekte bunu çağırabilir)
-connectDB(MONGODB_URI).catch(err => console.error("DB Bağlantı Hatası:", err));
-
 // Rotalar
-app.get('/health', (_req, res) => {
-  res.status(200).json({ status: 'ok', service: 'timorize-api' });
-});
-
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/plans', planRoutes);
 app.use('/api/timers', timerRoutes);
 app.use('/api/techniques', techniqueRoutes);
 
-// --- VERCEL İÇİN KRİTİK DEĞİŞİKLİK ---
-// Sadece local'de çalışırken app.listen kullanıyoruz.
-if (process.env.NODE_ENV !== 'production') {
-    app.listen(PORT, () => {
+// Sağlık kontrolü
+app.get('/health', async (_req, res) => {
+  const payload = { status: 'ok', service: 'timorize-api' };
+  try {
+    const cached = await getCachedJson('health:status');
+    if (cached) return res.status(200).json(cached);
+    await setCachedJson('health:status', payload, 60);
+  } catch (e) {
+    console.error("Health check Redis hatası:", e.message);
+  }
+  return res.status(200).json(payload);
+});
+
+// Başlatma mantığı
+async function startApp() {
+  try {
+    console.log("Servisler başlatılıyor...");
+    
+    // DB Bağlantıları
+    await connectDB(process.env.MONGODB_URI);
+    await initializeApp();
+    
+    console.log("Servisler hazır!");
+
+    // Sadece yerel/Docker ortamında dinlemeyi başlat
+    if (process.env.NODE_ENV !== 'production') {
+      app.listen(PORT, () => {
         console.log(`Sunucu http://localhost:${PORT} adresinde dinliyor.`);
-    });
+      });
+    }
+  } catch (err) {
+    console.error("KRİTİK HATA:", err.message);
+    process.exit(1);
+  }
 }
 
-// Vercel'in rotaları görebilmesi için app nesnesini dışa aktarıyoruz
+// Uygulamayı tetikle
+startApp();
+
+// Vercel için dışa aktar
 module.exports = app;
