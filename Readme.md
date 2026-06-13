@@ -29,3 +29,5 @@ Timorize ile planlı bir hayatın kapılarını aralayın!
 4. [ Web Frontend](WebFrontEnd.md)
 5. [Rest-API](Rest-API.md)
 6. [Video Sunum](Sunum.md)
+7. [Mobil Front-End](MobilFront-End.md)
+8. [Mobil Backend](MobilBackend.md)
