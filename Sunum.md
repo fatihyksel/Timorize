@@ -1,1 +1,7 @@
-Uygulamanın tüm gereksinimlerinin çalıştığını gösteren tanıtım video linki eklenecek
+
+
+## 7. Video Sunum
+
+| Teknoloji | Video | Durum |
+|---|---|---|
+| Docker + rabbit + Redis | [Kanıt Videosu]([https://youtu.be/SnlKuB2zf1c](https://www.youtube.com/watch?v=SW4myLHxnq4)) | Tamamlandı |
